@@ -39,6 +39,8 @@ dependencies:
   firebase_core: ^2.27.1
   firebase_auth: ^4.17.9
   google_sign_in: ^6.2.1
+  zego_uikit_prebuilt_call: ^4.5.1
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:
