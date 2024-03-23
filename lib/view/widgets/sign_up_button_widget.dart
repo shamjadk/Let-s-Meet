@@ -12,7 +12,7 @@ class SignUpButtonWidget extends StatelessWidget {
       children: [
         const Text("Don't have an account?"),
         InkWell(
-            onTap: () => navigate(const SignUpPage(), context),
+            onTap: () => navigatePush(const SignUpPage(), context),
             child: const Text(
               ' Sign up',
               style: TextStyle(color: Colors.blue),
