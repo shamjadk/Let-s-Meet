@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
-        android:label="lets_meet_app"
+        android:label="Let's Meet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

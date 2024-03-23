@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lets_meet_app/controller/auth_controller.dart';
 import 'package:lets_meet_app/controller/navigator.dart';
+import 'package:lets_meet_app/controller/utils/snack_bar_utils.dart';
 import 'package:lets_meet_app/view/pages/call_page.dart';
 import 'package:lets_meet_app/view/widgets/join_or_create_button_widget.dart';
 import 'package:lets_meet_app/view/widgets/text_field_widget.dart';
@@ -13,7 +14,7 @@ class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final channelController = useTextEditingController();
-    final uuid = const Uuid().v1();
+    final callID = const Uuid().v1();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Let's Meet"),
@@ -21,7 +22,23 @@ class HomePage extends HookWidget {
         actions: [
           IconButton(
               onPressed: () {
-                AuthController.logOut(context);
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text(
+                      'Do you want to log out?',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('No')),
+                      TextButton(
+                          onPressed: () => AuthController.logOut(context),
+                          child: const Text('Yes'))
+                    ],
+                  ),
+                );
               },
               icon: const Icon(
                 Icons.logout,
@@ -32,14 +49,16 @@ class HomePage extends HookWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 50,
+              ),
               JoinOrCreateButtonWidget(
                 buttonName: 'Create',
                 onPressed: () {
                   navigatePush(
                       CallPage(
-                        callID: uuid,
+                        callID: callID,
                       ),
                       context);
                 },
@@ -59,16 +78,22 @@ class HomePage extends HookWidget {
                       ),
                       content: TextFieldWidget(
                         controller: channelController,
-                        labeltext: 'Enter channel code',
+                        labeltext: 'Enter invitation code',
                       ),
                       actions: [
                         TextButton(
                             onPressed: () {
-                              navigatePush(
-                                  CallPage(
-                                    callID: channelController.text,
-                                  ),
-                                  context);
+                              if (channelController.text.trim().isEmpty) {
+                                navigatePush(
+                                    CallPage(
+                                      callID: channelController.text,
+                                    ),
+                                    context);
+                              } else {
+                                showSnackBar(
+                                    context, 'Please enter invitation code');
+                              }
+                              channelController.clear();
                             },
                             child: const Text('Join'))
                       ],

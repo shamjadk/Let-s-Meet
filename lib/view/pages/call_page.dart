@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:lets_meet_app/controller/utils/zego_utils.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
-class CallPage extends StatelessWidget {
+class CallPage extends StatefulWidget {
   final String callID;
 
   const CallPage({
@@ -12,6 +12,11 @@ class CallPage extends StatelessWidget {
     required this.callID,
   });
 
+  @override
+  State<CallPage> createState() => _CallPageState();
+}
+
+class _CallPageState extends State<CallPage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -21,23 +26,38 @@ class CallPage extends StatelessWidget {
           ZegoUIKitPrebuiltCall(
             appID: Zegoutils.appId,
             appSign: Zegoutils.appSign,
-            callID: callID,
+            callID: widget.callID,
             userID: user!.uid,
             userName: user.displayName!,
             config: ZegoUIKitPrebuiltCallConfig.groupVideoCall(),
           ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: InkWell(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: callID));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Invitation ID copied'),
-                    ),
-                  );
-                },
-                child: Text('Invitation code: $callID')),
+          SafeArea(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Invitation code: ${widget.callID}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: widget.callID));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Invitation ID copied'),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.copy,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),

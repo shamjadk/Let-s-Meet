@@ -11,7 +11,7 @@ class JoinOrCreateButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: CircleAvatar(
-        radius: MediaQuery.sizeOf(context).width / 4,
+        radius: 100,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         child: Column(
