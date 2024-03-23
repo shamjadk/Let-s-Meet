@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: FirebaseAuth.instance.currentUser != null
+      home: FirebaseAuth.instance.currentUser != null 
           ? const HomePage()
           : const LoginPage(),
     );

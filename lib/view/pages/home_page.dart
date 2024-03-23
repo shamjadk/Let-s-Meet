@@ -83,7 +83,7 @@ class HomePage extends HookWidget {
                       actions: [
                         TextButton(
                             onPressed: () {
-                              if (channelController.text.trim().isEmpty) {
+                              if (channelController.text.trim().isNotEmpty) {
                                 navigatePush(
                                     CallPage(
                                       callID: channelController.text,
