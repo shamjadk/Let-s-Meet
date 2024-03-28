@@ -34,10 +34,17 @@ class _CallPageState extends State<CallPage> {
           SafeArea(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  'Invitation code: ${widget.callID}',
-                  style: const TextStyle(color: Colors.white),
+                Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width / 1.5,
+                    child: Text(
+                      'Invitation code: ${widget.callID}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   width: 5,
